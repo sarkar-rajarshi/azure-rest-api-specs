@@ -757,7 +757,6 @@ model CancelExceptionAction extends ExceptionAction {
 @projectedName("java", "ExceptionActionInternal")
 model ExceptionAction {
   @doc("Unique Id of the exception action")
-  @visibility("read")
   id?: string;
 
   @doc("The type discriminator describing a sub-type of ExceptionAction")
