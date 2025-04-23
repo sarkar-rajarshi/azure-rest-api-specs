@@ -2679,7 +2679,7 @@
         },
         "configureSemanticRanking": {
           "type": "boolean",
-          "description": "Configure semantic ranking on the project"
+          "description": "Configure semantic ranking on the project. If true semantic ranking related configurations will be added to the index related to this project."
         }
       },
       "required": [

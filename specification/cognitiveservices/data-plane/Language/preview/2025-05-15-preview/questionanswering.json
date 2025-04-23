@@ -752,14 +752,14 @@
       "type": "object",
       "description": "Specify parameters for query matching",
       "properties": {
-        "type": {
-          "$ref": "#/definitions/MatchingPolicyType",
-          "description": "Type of matching policy to be applied"
+        "kind": {
+          "$ref": "#/definitions/MatchingPolicyKind",
+          "description": "Kind of matching policy to be applied"
         }
       },
-      "discriminator": "type",
+      "discriminator": "kind",
       "required": [
-        "type"
+        "kind"
       ]
     },
     "MatchingPolicyFieldsType": {
@@ -786,20 +786,20 @@
         ]
       }
     },
-    "MatchingPolicyType": {
+    "MatchingPolicyKind": {
       "type": "string",
-      "description": "Type of matching policy to be used",
+      "description": "Kind of matching policy to be used",
       "enum": [
-        "SimpleQuery"
+        "Prebuilt"
       ],
       "x-ms-enum": {
-        "name": "MatchingPolicyType",
+        "name": "MatchingPolicyKind",
         "modelAsString": true,
         "values": [
           {
-            "name": "SimpleQuery",
-            "value": "SimpleQuery",
-            "description": "Type to define for simple text query operations"
+            "name": "Prebuilt",
+            "value": "Prebuilt",
+            "description": "Prebuilt weights will be used for giving preference to question and answer columns when quering AI search"
           }
         ]
       }
@@ -840,6 +840,29 @@
         "value"
       ]
     },
+    "PrebuiltQueryMatchingKind": {
+      "type": "object",
+      "description": "Represents fields for Prebuilt query matching. Prebuilt weights will be used for giving preference to question and answer columns when quering AI search",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "description": "List of fields to filter during query. For ex if only \"questions\" is used then query will be filtered on that column",
+          "items": {
+            "$ref": "#/definitions/MatchingPolicyFieldsType"
+          }
+        },
+        "disableFullMatch": {
+          "type": "boolean",
+          "description": "Disabling full match on query. Enabling this will give preference to qna pairs that have exact match."
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/MatchingPolicy"
+        }
+      ],
+      "x-ms-discriminator-value": "Prebuilt"
+    },
     "QueryFilters": {
       "type": "object",
       "description": "filters over knowledge base.",
@@ -871,7 +894,7 @@
         },
         "matchingPolicy": {
           "$ref": "#/definitions/MatchingPolicy",
-          "description": "Specify parameters for query matching"
+          "description": "Policy for controling exact query match behaviour"
         }
       }
     },
@@ -914,7 +937,7 @@
           {
             "name": "Classic",
             "value": "Classic",
-            "description": "Set this value for scoring based on classic algorithms."
+            "description": "Set this value for scoring based on classic algorithms like wordnet, tfidf, ngram etc."
           },
           {
             "name": "Transformer",
@@ -924,7 +947,7 @@
           {
             "name": "Semantic",
             "value": "Semantic",
-            "description": "Set this scorer to use semantic based ranking."
+            "description": "Set this scorer to use AI search semantic based ranking. Semantic ranking should be configured for this to be used."
           }
         ]
       }
@@ -955,29 +978,6 @@
       "required": [
         "enable"
       ]
-    },
-    "SimpleQueryMatchingType": {
-      "type": "object",
-      "description": "Represents fields for simple query matching",
-      "properties": {
-        "fields": {
-          "type": "array",
-          "description": "List of fields to filter",
-          "items": {
-            "$ref": "#/definitions/MatchingPolicyFieldsType"
-          }
-        },
-        "enableFullMatch": {
-          "type": "boolean",
-          "description": "Enabling full match on query"
-        }
-      },
-      "allOf": [
-        {
-          "$ref": "#/definitions/MatchingPolicy"
-        }
-      ],
-      "x-ms-discriminator-value": "SimpleQuery"
     },
     "StringIndexType": {
       "type": "string",

@@ -350,7 +350,7 @@ model QuestionAnsweringProjectMetadata {
   lastDeployedDateTime?: utcDateTime;
 
   /**
-   * Configure semantic ranking on the project
+   * Configure semantic ranking on the project. If true semantic ranking related configurations will be added to the index related to this project.
    */
   @added(Versions.v2025_05_15_preview)
   configureSemanticRanking?: boolean;

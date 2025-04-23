@@ -70,7 +70,7 @@ union Scorer {
   string,
 
   /**
-   * Set this value for scoring based on classic algorithms.
+   * Set this value for scoring based on classic algorithms like wordnet, tfidf, ngram etc.
    */
   Classic: "Classic",
 
@@ -80,22 +80,22 @@ union Scorer {
   Transformer: "Transformer",
 
   /**
-   * Set this scorer to use semantic based ranking.
+   * Set this scorer to use AI search semantic based ranking. Semantic ranking should be configured for this to be used.
    */
   Semantic: "Semantic",
 }
 
 /**
- * Type of matching policy to be used
+ * Kind of matching policy to be used
  */
 @added(Versions.v2025_05_15_preview)
-union MatchingPolicyType {
+union MatchingPolicyKind {
   string,
 
   /**
-   * Type to define for simple text query operations
+   * Prebuilt weights will be used for giving preference to question and answer columns when quering AI search
    */
-  SimpleQuery: "SimpleQuery",
+  Prebuilt: "Prebuilt",
 }
 
 /**
@@ -421,7 +421,7 @@ model QueryPreferences {
   scorer?: Scorer;
 
   /**
-   * Specify parameters for query matching
+   * Policy for controling exact query match behaviour
    */
   matchingPolicy?: MatchingPolicy;
 }
@@ -430,33 +430,33 @@ model QueryPreferences {
  * Specify parameters for query matching
  */
 @added(Versions.v2025_05_15_preview)
-@discriminator("type")
+@discriminator("kind")
 model MatchingPolicy {
   /**
-   * Type of matching policy to be applied
+   * Kind of matching policy to be applied
    */
-  type: MatchingPolicyType;
+  kind: MatchingPolicyKind;
 }
 
 /**
- * Represents fields for simple query matching
+ * Represents fields for Prebuilt query matching. Prebuilt weights will be used for giving preference to question and answer columns when quering AI search
  */
 @added(Versions.v2025_05_15_preview)
-model SimpleQueryMatchingType extends MatchingPolicy {
+model PrebuiltQueryMatchingKind extends MatchingPolicy {
   /**
-   * Matching policy type
+   * Matching policy kind
    */
-  type: MatchingPolicyType.SimpleQuery;
+  kind: MatchingPolicyKind.Prebuilt;
 
   /**
-   * List of fields to filter
+   * List of fields to filter during query. For ex if only "questions" is used then query will be filtered on that column
    */
   fields?: MatchingPolicyFieldsType[];
 
   /**
-   * Enabling full match on query
+   * Disabling full match on query. Enabling this will give preference to qna pairs that have exact match.
    */
-  enableFullMatch?: boolean;
+  disableFullMatch?: boolean;
 }
 
 /**
