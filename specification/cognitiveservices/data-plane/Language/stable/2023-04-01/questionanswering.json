@@ -313,6 +313,10 @@
         "includeUnstructuredSources": {
           "type": "boolean",
           "description": "(Optional) Flag to enable Query over Unstructured Sources."
+        },
+        "queryPreferences": {
+          "$ref": "#/definitions/QueryPreferences",
+          "description": "To fine tune qeury results"
         }
       }
     },
@@ -754,6 +758,62 @@
         ]
       }
     },
+    "MatchingPolicy": {
+      "type": "object",
+      "description": "Specify parameters for query matching",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/MatchingPolicyType",
+          "description": "Type of matching policy to be applied"
+        }
+      },
+      "discriminator": "type",
+      "required": [
+        "type"
+      ]
+    },
+    "MatchingPolicyFieldsType": {
+      "type": "string",
+      "description": "Fields to be consdired for matching policy",
+      "enum": [
+        "Questions",
+        "Answer"
+      ],
+      "x-ms-enum": {
+        "name": "MatchingPolicyFieldsType",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "Questions",
+            "value": "Questions",
+            "description": "Include 'Questions' field"
+          },
+          {
+            "name": "Answer",
+            "value": "Answer",
+            "description": "Include 'Answer' field"
+          }
+        ]
+      }
+    },
+    "MatchingPolicyType": {
+      "type": "string",
+      "description": "Type of matching policy to be used",
+      "enum": [
+        "SimpleQuery"
+      ],
+      "x-ms-enum": {
+        "name": "MatchingPolicyType",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "SimpleQuery",
+            "value": "SimpleQuery",
+            "description": "Type to define for simple text query operations"
+          }
+        ]
+      }
+    },
     "MetadataFilter": {
       "type": "object",
       "description": "Find QnAs that are associated with the given list of metadata.",
@@ -811,6 +871,20 @@
         }
       }
     },
+    "QueryPreferences": {
+      "type": "object",
+      "description": "Additional properties to fine tune query results",
+      "properties": {
+        "scorer": {
+          "$ref": "#/definitions/Scorer",
+          "description": "To specify what scoring algorithm is preferred"
+        },
+        "matchingPolicy": {
+          "$ref": "#/definitions/MatchingPolicy",
+          "description": "Specify parameters for query matching"
+        }
+      }
+    },
     "RankerKind": {
       "type": "string",
       "description": "Type of ranker to be used.",
@@ -831,6 +905,36 @@
             "name": "Default",
             "value": "Default",
             "description": "Default ranker."
+          }
+        ]
+      }
+    },
+    "Scorer": {
+      "type": "string",
+      "description": "Type of scorer to be used",
+      "enum": [
+        "Classic",
+        "Transformer",
+        "Semantic"
+      ],
+      "x-ms-enum": {
+        "name": "Scorer",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "Classic",
+            "value": "Classic",
+            "description": "Set this value for scoring based on classic algorithms like tfidf, ngram, wordnet, dssm etc."
+          },
+          {
+            "name": "Transormer",
+            "value": "Transformer",
+            "description": "Set this value for scoring based on transformer based models."
+          },
+          {
+            "name": "Semantic",
+            "value": "Semantic",
+            "description": "Set this scorer to use semantic based ranking."
           }
         ]
       }
@@ -861,6 +965,29 @@
       "required": [
         "enable"
       ]
+    },
+    "SimpleQueryMatchingType": {
+      "type": "object",
+      "description": "Represents fields for simple query matching",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "description": "List of fields to filter",
+          "items": {
+            "$ref": "#/definitions/MatchingPolicyFieldsType"
+          }
+        },
+        "enableFullMatch": {
+          "type": "boolean",
+          "description": "Enabling full match on query"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/MatchingPolicy"
+        }
+      ],
+      "x-ms-discriminator-value": "SimpleQuery"
     },
     "StringIndexType": {
       "type": "string",

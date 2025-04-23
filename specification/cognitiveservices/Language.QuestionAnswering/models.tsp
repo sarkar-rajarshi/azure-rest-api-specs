@@ -74,7 +74,7 @@ union Scorer {
   Classic: "Classic",
 
   /**
-   * Set 'Transformer' for scoring based on transformer based models.
+   * Set this value for scoring based on transformer based models.
    */
   Transormer: "Transformer",
 
