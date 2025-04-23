@@ -1,5 +1,6 @@
 import "@typespec/rest";
 import "@typespec/http";
+import "@typespec/versioning";
 import "@azure-tools/typespec-azure-core";
 import "@typespec/versioning";
 
@@ -8,6 +9,7 @@ using TypeSpec.Rest;
 using TypeSpec.Http;
 using Azure.Core;
 using Azure.Core.Traits;
+using TypeSpec.Versioning;
 
 namespace Language.QuestionAnswering.Authoring;
 
@@ -348,6 +350,12 @@ model QuestionAnsweringProjectMetadata {
    */
   // FIXME: (utcDateTime) Please double check that this is the correct type for your scenario.
   lastDeployedDateTime?: utcDateTime;
+
+  /**
+   * Configure semantic ranking on the project. If true semantic ranking related configurations will be added to the index related to this project.
+   */
+  @added(Versions.v2025_05_15_preview)
+  configureSemanticRanking?: boolean;
 }
 
 /**
