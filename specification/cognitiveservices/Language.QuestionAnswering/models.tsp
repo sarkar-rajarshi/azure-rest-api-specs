@@ -70,14 +70,14 @@ union Scorer {
   string,
 
   /**
-   * Set this value for scoring based on classic algorithms like tfidf, ngram, wordnet, dssm etc.
+   * Set this value for scoring based on classic algorithms.
    */
   Classic: "Classic",
 
   /**
    * Set this value for scoring based on transformer based models.
    */
-  Transormer: "Transformer",
+  Transformer: "Transformer",
 
   /**
    * Set this scorer to use semantic based ranking.
@@ -315,7 +315,7 @@ model AnswersOptions {
   includeUnstructuredSources?: boolean;
 
   /**
-   * To fine tune qeury results
+   * To fine tune query results
    */
   @added(Versions.v2025_05_15_preview)
   queryPreferences?: QueryPreferences;

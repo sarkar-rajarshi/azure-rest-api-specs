@@ -306,7 +306,7 @@
         },
         "queryPreferences": {
           "$ref": "#/definitions/QueryPreferences",
-          "description": "To fine tune qeury results"
+          "description": "To fine tune query results"
         }
       }
     },
@@ -914,10 +914,10 @@
           {
             "name": "Classic",
             "value": "Classic",
-            "description": "Set this value for scoring based on classic algorithms like tfidf, ngram, wordnet, dssm etc."
+            "description": "Set this value for scoring based on classic algorithms."
           },
           {
-            "name": "Transormer",
+            "name": "Transformer",
             "value": "Transformer",
             "description": "Set this value for scoring based on transformer based models."
           },
