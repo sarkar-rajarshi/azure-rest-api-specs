@@ -63,6 +63,57 @@ union LogicalOperationKind {
 }
 
 /**
+ * Type of scorer to be used
+ */
+union Scorer {
+  string,
+
+  /**
+   * Set this value for scoring based on classic algorithms like tfidf, ngram, wordnet, dssm etc.
+   */
+  Classic: "Classic",
+
+  /**
+   * Set 'Transformer' for scoring based on transformer based models.
+   */
+  Transormer: "Transformer",
+
+  /**
+   * Set this scorer to use semantic based ranking.
+   */
+  Semantic: "Semantic",
+}
+
+/**
+ * Type of matching policy to be used
+ */
+union MatchingPolicyType {
+  string,
+
+  /**
+   * Type to define for simple text query operations
+   */
+  SimpleQuery: "SimpleQuery",
+}
+
+/**
+ * Fields to be consdired for matching policy
+ */
+union MatchingPolicyFieldsType {
+  string,
+
+  /**
+   * Include 'Questions' field
+   */
+  Questions: "Questions",
+
+  /**
+   * Include 'Answer' field
+   */
+  Answer: "Answer",
+}
+
+/**
  * Human-readable error code.
  */
 union ErrorCode {
@@ -259,6 +310,11 @@ model AnswersOptions {
    * (Optional) Flag to enable Query over Unstructured Sources.
    */
   includeUnstructuredSources?: boolean;
+
+  /**
+   * To fine tune qeury results
+   */
+  queryPreferences?: QueryPreferences;
 }
 
 /**
@@ -348,6 +404,52 @@ model ShortAnswerOptions {
   @maxValue(10)
   @minValue(1)
   topAnswersWithSpan?: int32;
+}
+
+/**
+ * Additional properties to fine tune query results
+ */
+model QueryPreferences {
+  /**
+   * To specify what scoring algorithm is preferred
+   */
+  scorer?: Scorer;
+
+  /**
+   * Specify parameters for query matching
+   */
+  matchingPolicy?: MatchingPolicy;
+}
+
+/**
+ * Specify parameters for query matching
+ */
+@discriminator("type")
+model MatchingPolicy {
+  /**
+   * Type of matching policy to be applied
+   */
+  type: MatchingPolicyType;
+}
+
+/**
+ * Represents fields for simple query matching
+ */
+model SimpleQueryMatchingType extends MatchingPolicy {
+  /**
+   * Matching policy type
+   */
+  type: MatchingPolicyType.SimpleQuery;
+
+  /**
+   * List of fields to filter
+   */
+  fields?: MatchingPolicyFieldsType[];
+
+  /**
+   * Enabling full match on query
+   */
+  enableFullMatch?: boolean;
 }
 
 /**

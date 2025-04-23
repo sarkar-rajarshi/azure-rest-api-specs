@@ -346,6 +346,11 @@ model QuestionAnsweringProjectMetadata {
    */
   // FIXME: (utcDateTime) Please double check that this is the correct type for your scenario.
   lastDeployedDateTime?: utcDateTime;
+
+  /**
+   * Enable semantic ranking on the project
+   */
+  enableSemanticRanking?: boolean;
 }
 
 /**
