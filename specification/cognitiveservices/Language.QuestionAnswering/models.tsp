@@ -65,6 +65,7 @@ union LogicalOperationKind {
 /**
  * Type of scorer to be used
  */
+@added(Versions.v2025_05_15_preview)
 union Scorer {
   string,
 
@@ -87,6 +88,7 @@ union Scorer {
 /**
  * Type of matching policy to be used
  */
+@added(Versions.v2025_05_15_preview)
 union MatchingPolicyType {
   string,
 
@@ -97,8 +99,9 @@ union MatchingPolicyType {
 }
 
 /**
- * Fields to be consdired for matching policy
+ * Fields to be considred for matching policy
  */
+@added(Versions.v2025_05_15_preview)
 union MatchingPolicyFieldsType {
   string,
 
@@ -314,6 +317,7 @@ model AnswersOptions {
   /**
    * To fine tune qeury results
    */
+  @added(Versions.v2025_05_15_preview)
   queryPreferences?: QueryPreferences;
 }
 
@@ -409,6 +413,7 @@ model ShortAnswerOptions {
 /**
  * Additional properties to fine tune query results
  */
+@added(Versions.v2025_05_15_preview)
 model QueryPreferences {
   /**
    * To specify what scoring algorithm is preferred
@@ -424,6 +429,7 @@ model QueryPreferences {
 /**
  * Specify parameters for query matching
  */
+@added(Versions.v2025_05_15_preview)
 @discriminator("type")
 model MatchingPolicy {
   /**
@@ -435,6 +441,7 @@ model MatchingPolicy {
 /**
  * Represents fields for simple query matching
  */
+@added(Versions.v2025_05_15_preview)
 model SimpleQueryMatchingType extends MatchingPolicy {
   /**
    * Matching policy type

@@ -1,11 +1,13 @@
 import "@typespec/rest";
 import "@typespec/http";
+import "@typespec/versioning";
 import "@azure-tools/typespec-azure-core";
 
 using TypeSpec.Rest;
 using TypeSpec.Http;
 using Azure.Core;
 using Azure.Core.Traits;
+using TypeSpec.Versioning;
 
 namespace Language.QuestionAnswering.Authoring;
 
@@ -350,6 +352,7 @@ model QuestionAnsweringProjectMetadata {
   /**
    * Enable semantic ranking on the project
    */
+  @added(Versions.v2025_05_15_preview)
   enableSemanticRanking?: boolean;
 }
 
