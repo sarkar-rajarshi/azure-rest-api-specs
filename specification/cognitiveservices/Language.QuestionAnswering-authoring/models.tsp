@@ -350,7 +350,7 @@ model QuestionAnsweringProjectMetadata {
   lastDeployedDateTime?: utcDateTime;
 
   /**
-   * Configure semantic ranking on the project. If true semantic ranking related configurations will be added to the index related to this project.
+   * Represents if semantic ranking is configured.
    */
   @added(Versions.v2025_05_15_preview)
   configureSemanticRanking?: boolean;
@@ -462,6 +462,12 @@ model CreateProjectOptions {
    * Configurable settings of the Project.
    */
   settings?: ProjectSettings;
+
+  /**
+   * Configure semantic ranking on the project. If true semantic ranking related configurations will be added to the index related to this project.
+   */
+  @added(Versions.v2025_05_15_preview)
+  configureSemanticRanking?: boolean;
 }
 
 /**

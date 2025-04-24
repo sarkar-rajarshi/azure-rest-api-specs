@@ -1458,6 +1458,10 @@
         "settings": {
           "$ref": "#/definitions/ProjectSettings",
           "description": "Configurable settings of the Project."
+        },
+        "configureSemanticRanking": {
+          "type": "boolean",
+          "description": "Configure semantic ranking on the project. If true semantic ranking related configurations will be added to the index related to this project."
         }
       },
       "required": [
@@ -2679,7 +2683,7 @@
         },
         "configureSemanticRanking": {
           "type": "boolean",
-          "description": "Configure semantic ranking on the project. If true semantic ranking related configurations will be added to the index related to this project."
+          "description": "Represents if semantic ranking is configured."
         }
       },
       "required": [
